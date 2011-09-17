@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import optparse
+from serial9k import Serial9k
+
+def main():
+    parser = optparse.OptionParser(usage='%prog <port name>',
+        version='0.1')
+    args = parser.parse_args()[1]
+
+    if not len(args):
+        parser.error('port name is mandatory')
+    port = args[0]
+
+    comm = Serial9k(port=port)
+    file_buffer = comm.read()
+    demo = open('demo', 'wb+')
+    print file_buffer
+    demo.write(file_buffer)
+    comm.close()
+    demo.close()
+
+if __name__ == '__main__':
+    main()
